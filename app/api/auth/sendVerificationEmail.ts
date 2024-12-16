@@ -7,8 +7,8 @@ export async function sendVerificationEmail(email: string, token: string) {
         port: 587,
         secure: true,
         auth: {
-            user: 'beta.tester14369@gmail.com',
-            pass: process.env.EMAIL_PASSWORD,
+            user: process.env.SMTP_EMAIL,
+            pass: process.env.SMTP_PASSWORD,
         },
         logger: true,
         debug: true
@@ -17,7 +17,7 @@ export async function sendVerificationEmail(email: string, token: string) {
     const verificationLink = `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/verify-email?token=${token}`;
 
     const mailOptions = {
-        from: 'beta.tester14369@example.com',
+        from: process.env.SMTP_EMAIL,
         to: email,
         subject: 'Verify Your Email Address',
         html: `
