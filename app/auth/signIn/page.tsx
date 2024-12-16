@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link';
-import { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, ReactNode, useState } from 'react'
 import { Mail } from 'lucide-react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { grid } from "ldrs"; // Loader Library
 
 import CustomInput from '@/components/CustomInput';
+import GridLdrs from '@/components/GridLdrs';
 
 grid.register();
 
@@ -24,7 +25,7 @@ function Page(): ReactNode {
     email: '',
     password: ''
   });
-  const [ loading, setLoading ] = useState<boolean>(false);
+  const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e?.target;
@@ -37,35 +38,25 @@ function Page(): ReactNode {
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     try{
       const response = await signIn('credentials', { ...formData, redirect: true, callbackUrl: "/" });
       if(!response){
         console.log("User could not be logged in")
       }
 
-      setLoading(false)
+      setIsLoading(false)
     }
     catch(error){
       console.warn("Error:", error);
-      setLoading(false);
+      setIsLoading(false);
     }
   }
-
-  useEffect(()=>{
-  })
 
   return (
     <div className='w-1/2 md:w-1/3 px-3 py-4 flex flex-col items-center justify-start md:gap-4 gap-1'>
       {
-        loading && <div className='absolute top-0 left-0 z-50 w-full h-full flex items-center justify-center bg-slate-200/90 text-black text-3xl font-extrabold'>
-          <l-grid
-            size='60'
-            speed='1.0'
-            color='black'
-          >
-          </l-grid>
-        </div>
+        isLoading && <GridLdrs />
       }
       {/* FORM HEADER */}
       <div className='w-full px-2 md:px-3 py-0 md:py-2 flex flex-col items-start justify-start md:gap-2 gap-1'>

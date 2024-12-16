@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-'use client';
+'use client'
 
 import { ChangeEvent, ReactNode, useContext, useEffect, useRef, useState } from 'react';
 
@@ -11,31 +11,40 @@ import FilterBar from '@/components/FilterBar';
 
 import { FilterContext } from '@/providers/FilterOptions/FilterOptions.Context';
 
-function Page(): ReactNode {
+export default function Page(): ReactNode {
     
     const { filterOptions, setFilterOptions } = useContext(FilterContext);
-    const selectRef = useRef<HTMLSelectElement>(null);
+    const selectRef = useRef<null | HTMLSelectElement>(null);
 
     const [browseData, setBrowseData] = useState<browseDataType[] | null>(null);
 
     const selectChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
         setFilterOptions({
             ...filterOptions,
-            sortBy: e.target.value as tSortBy
+            sortBy: e.target?.value as tSortBy
         })    
     }
 
     useEffect(() => {
-        if(selectRef?.current){
-            selectRef.current.value = filterOptions.sortBy;
+        if (typeof window !== 'undefined' && selectRef.current) {
+            selectRef.current.value = filterOptions.sortBy || '';
         }
         // Initial Load
-        fetch('/api/product/all')
-            .then(response => response.json())
-            .then(data => setBrowseData(data.data))
-            .catch(error => console.warn(error)) 
+        
+        const fetchData = async () => {
+            try{
+                const response = await fetch('/api/product/all');
+                const data = await response.json();
+                setBrowseData(data.data);
+            }
+            catch(error){
+                console.warn(error);
+            }
+        }
 
-    }, [filterOptions.sortBy, selectRef.current?.value])
+        fetchData();
+
+    }, [filterOptions.sortBy])
 
     return (
         <div className='absolute left-0 top-0 w-full h-full flex flex-col items-center justify-end overflow-hidden'>
@@ -74,5 +83,3 @@ function Page(): ReactNode {
         </div>
     )
 }
-
-export default Page

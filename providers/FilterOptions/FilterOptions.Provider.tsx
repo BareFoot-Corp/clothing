@@ -3,13 +3,13 @@
 import { HTMLAttributes, ReactNode, useState } from "react";
 import { FilterContext, initialState, tFilterOptions } from "./FilterOptions.Context";
 
-function FilterOptionsProvider(props: HTMLAttributes<HTMLDivElement>): ReactNode{
+function FilterOptionsProvider({ children }: HTMLAttributes<HTMLDivElement>): ReactNode{
     const [filterOptions, setFilterOptions ] = useState<tFilterOptions>({
         ...initialState
     })
     return(
         <FilterContext.Provider value={{ filterOptions, setFilterOptions}}>
-            { props.children }
+            { children }
         </FilterContext.Provider>
     )
 }
