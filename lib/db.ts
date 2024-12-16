@@ -19,13 +19,19 @@ export async function getUserById(id: string | undefined){
 }
 
 export async function getUserByEmail(email: string){
-    const user = await prisma.user.findUnique({ 
-        where: { email },
-        
-        select: { username: true, fullname: true, email: true, id: true, isAdmin: true, isVerified: true, avatar: true }
-    }); 
+    try{
 
-    return user;
+        const user = await prisma.user.findUnique({ 
+            where: { email },
+            
+            select: { username: true, fullname: true, email: true, id: true, isAdmin: true, isVerified: true, avatar: true }
+        }); 
+    
+        return user;
+    }
+    catch(error){
+        throw Error(`Server Error\n${error}`);
+    }
 }
 
 export async function getUserHashedPassword( email: string | null = null){

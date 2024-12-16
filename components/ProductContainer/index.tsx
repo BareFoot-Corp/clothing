@@ -37,24 +37,38 @@ export default function ProductContainer({ items }: iProductContainer ): ReactNo
     }, [filterOptions.sortBy, items]);
 
     useEffect(() => {
-        
+        if(!items)
+        {
+            setIsLoading(true);
+        }
+        else if(items?.length === 0){
+            setIsLoading(false);
+            // Need to add no resources found
+        }
+        else{
+            setIsLoading(false);
+        }
     }, [items])
 
     return(
-        <div className="h-[85%] flex items-center justify-center overflow-y-auto">
+        <div className="relative h-[85%] flex items-center justify-center overflow-y-auto">
             <div className="w-fit h-full px-8 py-3 grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
             {
                 sortedItems?.map((item, idx) => <ProductCard key={idx} item={item}/>)
             }
             </div>
-            <div>
-                <l-grid
-                    color="black"
-                    size={75}
-                    speed={1.0}
-                >
-                </l-grid>
-            </div>
+
+            { 
+                isLoading &&
+                <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50">
+                    <l-grid
+                        color="black"
+                        size={75}
+                        speed={1.0}
+                    >
+                    </l-grid>
+                </div>
+            }
         </div>
     )
 }

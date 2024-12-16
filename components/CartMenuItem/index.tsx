@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { browseDataType } from '@/data/data'
+import { browseDataType } from '@/lib/type'
 import React, { HTMLAttributes } from 'react'
 
 interface iCartItemProps extends HTMLAttributes<HTMLDivElement>{

@@ -12,7 +12,7 @@ function Page(): ReactNode {
   const router = useRouter();
   const { status } = useSession();
 
-  if(status === 'authenticated'){
+  if(status && status === 'authenticated'){
     router.replace('/');
   }
 

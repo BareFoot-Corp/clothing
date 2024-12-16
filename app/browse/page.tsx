@@ -32,7 +32,7 @@ function Page(): ReactNode {
         // Initial Load
         fetch('/api/product/all')
             .then(response => response.json())
-            .then(data => setBrowseData(data))
+            .then(data => setBrowseData(data.data))
             .catch(error => console.warn(error)) 
 
     }, [filterOptions.sortBy, selectRef.current?.value])

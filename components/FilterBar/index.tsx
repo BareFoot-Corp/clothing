@@ -9,15 +9,19 @@ import Checkbox from '../Checkbox';
 import ColorCheckbox from '../ColorCheckbox';
 import RadioGroupFilter from '../RadioGroupFilter';
 
-import { tFilter } from '@/lib/type';
+import { browseDataType, tFilter } from '@/lib/type';
 // import { browseData } from '@/lib/type';
 import { FilterContext, tFilterOptions } from '@/providers/FilterOptions/FilterOptions.Context';
-import { getAllProducts } from '@/lib/db';
 // import { filterArray } from '@/lib/utils';
 
+const browseData: browseDataType[] = [];
+
 function Index(): ReactNode {
-    
-    let browseData;
+
+    fetch('/api/product/all')
+        .then(response => response.json())
+        .then(fetchData => fetchData?.data?.forEach((d: browseDataType) => browseData.push(d)))
+        .catch(error => new Error(`Server Error:\n${error}`));
 
     const [ extendedColorMenu, setExtendedColorMenu ] = useState<boolean>(false);
     const [ extendedSizeMenu, setExtendedSizeMenu ] = useState<boolean>(false);
@@ -162,8 +166,6 @@ function Index(): ReactNode {
 
     useEffect(() => {
         setEnableApply(hasStateChanged);
-
-        
     }, [filterOptions.filter, initialFilterOptions])
 
     return (

@@ -1,7 +1,7 @@
 // import { Dispatch, SetStateAction, createContext } from "react";
 
 import { createContext } from "react";
-import { browseDataType } from "@/data/data";
+import { browseDataType } from "@/lib/type";
 
 export type tCart = {
     item: browseDataType,

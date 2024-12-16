@@ -1,5 +1,5 @@
 import {HTMLAttributes, ReactNode, useContext, useEffect} from 'react';
-import { browseDataType } from '@/data/data';
+import { browseDataType } from '@/lib/type';
 import { CartContext } from '@/providers/Cart/Cart.Context';
 
 interface iProductItem extends HTMLAttributes<HTMLDivElement>{

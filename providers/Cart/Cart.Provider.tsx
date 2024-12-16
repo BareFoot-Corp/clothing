@@ -2,7 +2,7 @@
 
 import { HTMLAttributes, ReactNode, useState } from "react";
 import { CartContext, tCart } from "./Cart.Context";
-import { browseDataType } from "@/data/data";
+import { browseDataType } from "@/lib/type";
 
 export default function CartProvider({ children }: HTMLAttributes<HTMLDivElement>): ReactNode{
     const [ cartItems, setCartItems ] = useState<tCart[]>([]);

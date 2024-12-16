@@ -1,7 +1,8 @@
 import { ThemeProvider } from "@/components/theme-provider";
-import { Analytics } from "@vercel/analytics/react"
 import type { Metadata } from "next";
 import { Agdasima } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
+// import { PrismaClient } from "@prisma/client";
 import "./globals.css";
 
 import AppProvider from "@/providers/AppProvider";
@@ -9,7 +10,7 @@ import AppProvider from "@/providers/AppProvider";
 import NavBar from "@/components/NavBar/NavBar.component";
 import BottomNav from "@/components/BottomNav/BottomNav.component";
 import FilterOptionsProvider from "@/providers/FilterOptions/FilterOptions.Provider";
-import { SessionProvider } from "next-auth/react";
+// import { browseData } from "@/data/data";
 
 const agdasima = Agdasima({
   weight: "400",
@@ -33,6 +34,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  // populatePrisma();
+
   return (
     <html lang="en">
       <AppProvider>
@@ -51,7 +55,6 @@ export default async function RootLayout({
                 {children}
                 <BottomNav/>
               </FilterOptionsProvider>
-              <Analytics/>
             </ThemeProvider>
           </body>
         </SessionProvider>
