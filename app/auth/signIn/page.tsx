@@ -7,12 +7,8 @@ import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-import { grid } from "ldrs"; // Loader Library
-
 import CustomInput from '@/components/CustomInput';
 import GridLdrs from '@/components/GridLdrs';
-
-grid.register();
 
 function Page(): ReactNode {
   const router = useRouter();
