@@ -3,6 +3,10 @@ import { browseDataType } from "@/lib/type";
 
 const prisma = new PrismaClient();
 
+type argString = string | null | undefined;
+type argBoolean = boolean | null | undefined;
+
+// GET USERS
 export async function getUserById(id: string | undefined){
     try{
         const user = await prisma.user.findUnique({ 
@@ -48,6 +52,30 @@ export async function getUserHashedPassword( email: string | null = null){
     }
 
     return user?.password;
+}
+
+// SET USERS
+export async function setGoogleUser(id: argString, email: argString, email_verified: argBoolean, picture: argString, name: argString){
+    try{
+        if(id && email && picture && name && email_verified){
+            const response = await prisma.user.create({
+                data: {
+                    id,
+                    username: name,
+                    fullname: name,
+                    email, 
+                    avatar: picture,
+                    isVerified: email_verified
+                }
+            })
+
+            console.log(response);
+        }
+
+        return null;
+    }catch(error){
+        throw Error(`error`);
+    }
 }
 
 

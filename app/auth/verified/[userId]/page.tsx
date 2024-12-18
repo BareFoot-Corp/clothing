@@ -25,14 +25,18 @@ export default function Page(){
             return;
         }
 
-        setInterval(() => {
-            setTimer(timer - 1);
+        const intervalID = setInterval(() => {
+            setTimer(prevTime => prevTime - 1);
         }, 1000);
+
+
+        return () => clearInterval(intervalID);
+
     }, [router, timer])
 
     return(
         <div className='w-full h-full flex flex-col items-center justify-center gap-4'>
-            <span>Welcome { userData ? userData.username : '____'}</span>
+            <span>Welcome to our world, { userData ? userData.username : '____'}</span>
             <span>Redirecting In ... { timer }</span>
         </div>
     )

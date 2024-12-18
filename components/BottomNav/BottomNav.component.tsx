@@ -12,8 +12,11 @@ export default async function BottomNav(){
     const session = await auth();
     let user: tUser | null = null;
 
+    // console.log("Bottom Session:",session);
+
     if(session?.user){
         user = await getUserById(session.user.id);
+        // console.log("User: ",user);
     }
 
     return(
@@ -32,7 +35,7 @@ export default async function BottomNav(){
                     <Home/>
                 </Link>
                 <Link
-                    href={`${user?.id ? `/user/${user?.id}` : '/auth/signIn'}`}
+                    href={`${user?.id ? `/user/${user.id}` : '/auth/signIn'}`}
                     className={"absolute sm:right-[40%] right-[30%] translate-x-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 hover:scale-150 transition-all duration-200 ease-in-out pointer-events-auto"}
                 > 
                     <AvatarComponent user={user}/>
