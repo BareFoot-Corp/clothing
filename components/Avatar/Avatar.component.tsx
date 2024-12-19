@@ -10,8 +10,7 @@ export default function AvatarComponent({ fullname, avatar }: iAvatar): ReactNod
     const urlName = () => {
         if(fullname){
             const sName = splitName(fullname);
-            // console.log(sName);
-            console.log(`${sName[0]}+${sName[1]}`);
+            // console.log(`${sName[0]}+${sName[1]}`);
             return `${sName[0]}+${sName[1]}`;
         }
         return "John+Doe";
