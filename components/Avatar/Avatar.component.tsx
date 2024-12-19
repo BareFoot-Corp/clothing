@@ -14,13 +14,13 @@ export default function AvatarComponent({ fullname, avatar }: iAvatar): ReactNod
             console.log(`${sName[0]}+${sName[1]}`);
             return `${sName[0]}+${sName[1]}`;
         }
-        throw Error("No name passed!");
+        return "John+Doe";
     }
 
     return(
         <Avatar>
             <AvatarImage src={ avatar ? avatar :`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${urlName()}`} alt={"avatar"}/>
-            <AvatarFallback>{ fullname ? getInitials(fullname) : 'F' }</AvatarFallback>
+            <AvatarFallback>{ fullname ? getInitials(fullname) : 'JD' }</AvatarFallback>
         </Avatar>
     )
 }
