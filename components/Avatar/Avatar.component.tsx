@@ -1,26 +1,26 @@
 import { HTMLAttributes, ReactNode } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials, splitName } from "@/lib/utils";
-import { tUser } from "@/lib/type";
 
 interface iAvatar extends HTMLAttributes<HTMLDivElement> {
-    user: tUser | null;
+    fullname?: string,
+    avatar?: string | null,
 }
-
-export default function AvatarComponent({ user }: iAvatar): ReactNode{
+export default function AvatarComponent({ fullname, avatar }: iAvatar): ReactNode{
     const urlName = () => {
-        if(user?.fullname){
-            const sName = splitName(user.fullname);
+        if(fullname){
+            const sName = splitName(fullname);
             // console.log(sName);
+            console.log(`${sName[0]}+${sName[1]}`);
             return `${sName[0]}+${sName[1]}`;
         }
-        return;
+        throw Error("No name passed!");
     }
 
     return(
         <Avatar>
-            <AvatarImage src={ user?.avatar ? user?.avatar :`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${urlName()}`} alt={"avatar"}/>
-            <AvatarFallback>{ user ? getInitials(user.fullname) : 'F' }</AvatarFallback>
+            <AvatarImage src={ avatar ? avatar :`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${urlName()}`} alt={"avatar"}/>
+            <AvatarFallback>{ fullname ? getInitials(fullname) : 'F' }</AvatarFallback>
         </Avatar>
     )
 }

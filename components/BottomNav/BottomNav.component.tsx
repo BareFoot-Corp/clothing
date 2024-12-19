@@ -1,6 +1,7 @@
 import { Home, Search } from "lucide-react";
 import Link from "next/link";
 import AvatarComponent from "../Avatar/Avatar.component";
+
 import { auth } from "@/lib/auth";
 import { getUserById } from "@/lib/db";
 
@@ -15,8 +16,8 @@ export default async function BottomNav(){
     // console.log("Bottom Session:",session);
 
     if(session?.user){
+        // console.log("Session User: ", session.user);
         user = await getUserById(session.user.id);
-        // console.log("User: ",user);
     }
 
     return(
@@ -38,7 +39,7 @@ export default async function BottomNav(){
                     href={`${user?.id ? `/user/${user.id}` : '/auth/signIn'}`}
                     className={"absolute sm:right-[40%] right-[30%] translate-x-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 hover:scale-150 transition-all duration-200 ease-in-out pointer-events-auto"}
                 > 
-                    <AvatarComponent user={user}/>
+                    <AvatarComponent fullname={user?.username} avatar={user?.avatar}/>
                 </Link>
             </div>
                 

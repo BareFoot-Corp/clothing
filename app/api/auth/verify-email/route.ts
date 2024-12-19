@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     // Verify the JWT token
     const decoded = verifyToken(token) as JwtPayload;
 
-    console.log("Verify-Email Route:", decoded);
+    // console.log("Verify-Email Route:", decoded);
 
     // Find the user and mark them as verified
     const user = await prisma.user.update({

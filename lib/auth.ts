@@ -7,9 +7,11 @@ import { generateToken } from "./utils";
 import { sendVerificationEmail } from "@/app/api/auth/sendVerificationEmail";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({ 
-    secret: process.env.NEXT_SECRET,
+    trustHost: true,
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
-        strategy: 'jwt'
+        strategy: 'jwt',
+        maxAge: 7 * 24 * 60 * 60 // 7 days in seconds
     },
     pages: {
         signIn: '/auth/signIn',
@@ -62,8 +64,45 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 }
             }
         }) ,
-        Google
+        Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET,
+            allowDangerousEmailAccountLinking: true,
+            authorization: {
+                params: {
+                    scope: "openid profile email", // Ensure this is correct
+                },
+            },
+        })
     ],
+    cookies:{
+        csrfToken: {
+            name: 'next-auth.csrf-token',
+            options: {
+                httpOnly: true,
+                sameSite: 'strict', // Or 'lax' if needed, but 'strict' is recommended for security
+                path: '/',
+                secure: process.env.NODE_ENV === 'production', // Use "secure" in production
+            }
+        },
+        sessionToken: {
+            name: `next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'strict',
+                path: '/',
+                secure: process.env.NODE_ENV === 'production',
+            }
+        },
+        callbackUrl: {
+            name: `next-auth.callback-url`,
+            options: {
+                sameSite: 'lax',
+                path: '/',
+                secure: process.env.NODE_ENV === 'production',
+            }
+        },
+    },
     callbacks: {
         async jwt({ token, user }){
             console.log(user);
@@ -86,14 +125,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 if(account?.provider === 'google'){
                     if(profile && user){
                         await setGoogleUser(user.id, user.email, profile.email_verified, user.image, user.name);
-                        return profile.email_verified ? true : false;
+                        return profile.email_verified ? profile.email_verified : false;
                     }
                 }
 
                 return true;
 
             }catch(error){
-                throw Error(`${error}`);
+                throw error;
             }
         }
     }

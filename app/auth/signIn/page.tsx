@@ -42,7 +42,7 @@ function Page(): ReactNode {
       return;
     }
     try{
-      const response = await signIn('credentials', { ...formData, redirect: true, callbackUrl: "/" });
+      const response = await signIn('credentials', { ...formData, redirectTo: "/"});
       if(!response){
         console.log("User could not be logged in");
       }
@@ -55,9 +55,13 @@ function Page(): ReactNode {
     }
   }
 
+  // GOOGLE Authentication Login
   const handleGoogleLogin = async() => {
     try{
       const response = await signIn('google');
+      if(!response){
+        console.log("User could not be logged in");
+      }
     }
     catch(error)
     {
@@ -106,7 +110,10 @@ function Page(): ReactNode {
           Or sign in with one of the other accounts:
         </div>
         <div className='w-full flex flex-col items-center justify-center gap-2 text-lg'>
-          <div className='w-full py-2 border-2 border-solid border-black rounded-md flex items-center justify-center cursor-pointer hover:bg-slate-100' onClick={handleGoogleLogin}>
+          <div 
+            className='w-full py-2 border-2 border-solid border-black rounded-md flex items-center justify-center cursor-pointer hover:bg-slate-100' 
+            onClick={handleGoogleLogin}
+          >
             <Image 
               width={0} 
               height={0} 

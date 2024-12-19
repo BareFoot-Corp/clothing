@@ -13,12 +13,19 @@ export type tSortBy = 'price_asc' | 'price_desc' | 'popular_asc' | 'popular_desc
 
 export type tUser = {
     id: string;
-    fullname: string;
+    fullname: string | null;
     username: string;
     email: string;
     isAdmin: boolean;
     isVerified: boolean;
     avatar: string | null;
+}
+
+export type tGoogleUser = {
+    id: string;
+    email: string;
+    name: string;
+    image: string;
 }
 
 export type browseDataType = {
