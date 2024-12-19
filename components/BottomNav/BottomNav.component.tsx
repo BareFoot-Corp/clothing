@@ -3,7 +3,7 @@ import Link from "next/link";
 import AvatarComponent from "../Avatar/Avatar.component";
 
 import { auth } from "@/lib/auth";
-import { getUserById } from "@/lib/db";
+import { getUserByEmail } from "@/lib/db";
 
 
 import { tUser } from "@/lib/type";
@@ -15,9 +15,9 @@ export default async function BottomNav(){
 
     // console.log("Bottom Session:",session);
 
-    if(session?.user){
-        // console.log("Session User: ", session.user);
-        user = await getUserById(session.user.id);
+    if(session){
+        // console.log("Session User (bottomnav.tsx): ", session.user);
+        user = await getUserByEmail(session.user?.email as string);
     }
 
     return(

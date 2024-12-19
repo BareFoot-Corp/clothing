@@ -75,7 +75,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
         })
     ],
-    cookies:{
+    cookies: { 
+        // Neede as I was  getting MissingCSRF error
         csrfToken: {
             name: 'next-auth.csrf-token',
             options: {
@@ -86,6 +87,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
         },
         sessionToken: {
+            // Renaming this caused problem in middleware,
+            // So had to use cookieName option
             name: `next-auth.session-token`,
             options: {
                 httpOnly: true,
@@ -105,7 +108,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     callbacks: {
         async jwt({ token, user }){
-            console.log(user);
+            // console.log(user);
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
@@ -124,7 +127,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             try{
                 if(account?.provider === 'google'){
                     if(profile && user){
-                        await setGoogleUser(user.id, user.email, profile.email_verified, user.image, user.name);
+                        // console.log("User (auth.js):", user);
+                        await setGoogleUser(user.email, profile.email_verified, user.image, user.name);
                         return profile.email_verified ? profile.email_verified : false;
                     }
                 }
@@ -132,7 +136,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 return true;
 
             }catch(error){
-                throw new Error(`${error}`)
+                throw new Error(`SignIn Error: ${error}`)
             }
         }
     }

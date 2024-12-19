@@ -55,17 +55,18 @@ export async function getUserHashedPassword( email: string | null = null){
 }
 
 // SET USERS
-export async function setGoogleUser(id: argString, email: argString, email_verified: argBoolean, picture: argString, name: argString){
+export async function setGoogleUser( email: argString, email_verified: argBoolean, picture: argString, name: argString){
     try{
-        if(id && email && picture && name && email_verified){
+        if(email && picture && name && email_verified){
             const user = await prisma.user.findUnique({
-                where: { id }
+                where: { email }
             });
+
+            // console.log("Google User ID(db.ts)", id)
 
             if(!user){
                 await prisma.user.create({
                     data: {
-                        id,
                         username: name,
                         email, 
                         avatar: picture,
