@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import { getUserByEmail, getUserHashedPassword, setGoogleUser } from "./db";
 import { generateToken } from "./utils";
 import { sendVerificationEmail } from "@/app/api/auth/sendVerificationEmail";
+import { NextResponse } from "next/server";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({ 
     trustHost: true,
@@ -132,7 +133,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 return true;
 
             }catch(error){
-                throw error;
+                throw new Error(`${error}`)
             }
         }
     }

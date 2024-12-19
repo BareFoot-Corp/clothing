@@ -88,10 +88,9 @@ function Page(): ReactNode {
         return response.json();
       }).then(() => {
           resetFormData();
-
           router.push('/auth/signIn');
       }).catch(err => {
-        console.log("Failed", err);
+        console.warn("Failed", err);
       })
     }
 

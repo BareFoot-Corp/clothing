@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     const token = searchParams.get('token');
 
   if (!token || typeof token !== 'string') {
-    return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid token' }, { status: 500 });
   }
 
   try {

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "npx prisma generate",
+    "postinstall": "prisma generate",
     "dbPushLocal": "npx prisma generate && dotenv -e .env.local npx prisma db push"
   },
   "dependencies": {
