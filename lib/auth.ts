@@ -78,7 +78,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         })
     ],
     cookies: { 
-        // Neede as I was  getting MissingCSRF error
+        // Needed as I was  getting MissingCSRF error
         csrfToken: {
             name: 'next-auth.csrf-token',
             options: {
