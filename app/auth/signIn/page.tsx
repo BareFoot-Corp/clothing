@@ -60,7 +60,7 @@ function Page(): ReactNode {
     try{
       const response = await signIn('google');
       if(!response){
-        console.log("User could not be logged in");
+        console.warn("User could not be logged in");
       }
     }
     catch(error)

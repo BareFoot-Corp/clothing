@@ -1,7 +1,6 @@
 // export { auth as middleware } from "@/lib/auth"
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from 'next-auth/jwt';
-import { getUserById } from "./lib/db";
 
 // middleware function runs at all pages unless mathcher config is set
 export default async function middleware(request: NextRequest){
