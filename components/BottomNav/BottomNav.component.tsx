@@ -1,25 +1,44 @@
-import { Home, Search } from "lucide-react";
+'use client'
+
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { Home, Search } from "lucide-react";
+
 import AvatarComponent from "../Avatar/Avatar.component";
-
-import { auth } from "@/lib/auth";
-import { getUserByEmail } from "@/lib/db";
-
 
 import { tUser } from "@/lib/type";
 
 
-export default async function BottomNav(){
-    const session = await auth();
-    let user: tUser | null = null;
+export default function BottomNav(){
+    
+    const [user, setUser] = useState<tUser | null>(null);
+    const { data: session } = useSession();
+
+    useEffect(() => {
+        const loadUser = async () => {
+            if(session){
+                const response = await fetch('/api/getData/bottomNav', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: session.user?.email })
+                });
+
+                if(!response.ok){
+                    throw Error("No repsonse from server");
+                }
+
+                const data = await response.json();
+
+                setUser(data);
+            }
+        };
+        loadUser();
+    }, [session])
 
     // console.log("Bottom Session:",session);
-
-    if(session){
-        // console.log("Session User (bottomnav.tsx): ", session.user);
-        user = await getUserByEmail(session.user?.email as string);
-    }
-
     return(
         <div className={"absolute bottom-5 left-0 w-full h-10 px-6 flex items-center justify-center text-black pointer-events-none"}>
             <div className="relative w-full h-full flex items-center justify-between">

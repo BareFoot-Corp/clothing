@@ -70,13 +70,15 @@ export default function NavBar(): ReactNode{
     return(
         <header className={"relative z-10 w-full h-auto pt-3 px-8 flex items-center justify-between text-black"}>
             <div className={"w-10 h-10 flex items-center justify-center"}>
-                <Image 
-                    src=""
+                {/* Change when logo is found */}
+                
+                {/* <Image 
+                    src={""}
                     alt={"logo"} 
                     width={0} 
                     height={0} 
                     className={"w-full h-full"}
-                />
+                /> */}
             </div>
             <nav
                 className={`md:top-1/2 md:-translate-y-1/2 px-3 py-2 absolute top-[100%] left-1/2 flex items-center justify-between gap-16 -translate-x-1/2`}

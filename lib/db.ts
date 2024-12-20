@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-import { browseDataType } from "@/lib/type";
+import { prisma } from "./prisma";
+import { browseDataType } from "./type";
 
-const prisma = new PrismaClient();
 
 type argString = string | null | undefined;
 type argBoolean = boolean | null | undefined;
@@ -17,7 +16,7 @@ export async function getUserById(id: string | undefined){
         return user;
     }
     catch(err){
-        throw Error(`Server Error:\n${err}`);
+        throw Error(`Server Error in Getting User by ID:\n${err}`);
     }
 
 }
@@ -35,6 +34,24 @@ export async function getUserByEmail(email: string){
     }
     catch(error){
         throw Error(`Server Error\n${error}`);
+    }
+}
+
+export async function getUserIdbyEmail(email?: argString){
+    try{
+        if(email){
+            const userID = await prisma.user.findUnique({
+                where: {email},
+                select: { id: true }
+            });
+
+            if(userID){
+                return userID.id;
+            }
+        };
+    }
+    catch(error){
+        throw new Error(`Error Getting User ID:\n${error}`);
     }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { auth } from '@/lib/auth';
-import { getUserById } from '@/lib/db';
+import { getUserByEmail } from '@/lib/db';
 
 import { tUser } from '@/lib/type';
 
@@ -12,7 +12,7 @@ async function Page() {
   if(!session){
     return <div> No Data </div>
   }
-  const user: tUser | null = await getUserById(session.user?.id);
+  const user: tUser | null = await getUserByEmail(session.user?.email as string);
 
   return (
     <div className='w-[90%] h-1/2 px-4 py-3 border-[1px] border-solid border-slate-300 rounded-2xl flex flex-col items-center justify-center '>

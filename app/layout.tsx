@@ -18,7 +18,7 @@ const agdasima = Agdasima({
 })
 
 export const metadata: Metadata = {
-  title: "Barefeet Travels"
+  title: "Barefoot Travels"
 };
 
 // const populatePrisma = async() => {
@@ -44,17 +44,7 @@ export default async function RootLayout({
           <body
             className={`${agdasima.className} antialiased relative w-screen h-screen`}
           >
-            <script
-              type="module"
-              defer
-              src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/spiral.js"
-            ></script>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-              >
+            <ThemeProvider>
               <FilterOptionsProvider>
                 <NavBar/>
                 {children}

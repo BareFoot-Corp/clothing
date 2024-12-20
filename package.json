@@ -11,6 +11,7 @@
     "dbPushLocal": "npx prisma generate && dotenv -e .env.local npx prisma db push"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.7.4",
     "@prisma/client": "^6.1.0",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-icons": "^1.3.0",
@@ -23,7 +24,7 @@
     "ldrs": "^1.0.2",
     "lodash.isequal": "^4.5.0",
     "lucide-react": "^0.453.0",
-    "next": "14.2.14",
+    "next": "^15.1.2",
     "next-auth": "^5.0.0-beta.25",
     "next-themes": "^0.3.0",
     "nodemailer": "^6.9.16",

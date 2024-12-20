@@ -1,9 +1,12 @@
 import NextAuth from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google"
 import bcrypt from 'bcryptjs';
 import { getUserByEmail, getUserHashedPassword, setGoogleUser } from "./db";
+import { prisma } from './prisma';
 import { generateToken } from "./utils";
+
 import { sendVerificationEmail } from "@/app/api/auth/sendVerificationEmail";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({ 
@@ -16,6 +19,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     pages: {
         signIn: '/auth/signIn',
     },
+    adapter: PrismaAdapter(prisma),
     providers: [ 
         Credentials({
             name: "credentials",
@@ -108,7 +112,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     callbacks: {
         async jwt({ token, user }){
-            // console.log(user);
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
@@ -121,13 +124,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               session.user.id = token.id as string;
               session.user.email = token.email as string;
             }
+            
+            // console.log("Session (auth.ts)", session);
             return session;
         },
         async signIn({ user, account, profile }){
             try{
                 if(account?.provider === 'google'){
                     if(profile && user){
-                        // console.log("User (auth.js):", user);
+                        // console.log("Profile (auth.js):", profile);
                         await setGoogleUser(user.email, profile.email_verified, user.image, user.name);
                         return profile.email_verified ? profile.email_verified : false;
                     }
